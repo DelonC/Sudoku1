@@ -28,6 +28,19 @@ public class SudokuBoard {
    }
     
    public String toString() {
-      return "";
+      String result = "";
+      for(int r = 0; r < board.length; r++) {
+         for(int c = 0; c < board.length; c++) {
+            int number = board[r][c];
+            if (number == 0) {
+               result += ".";
+            }
+            else {
+               result += "number";
+            }
+         }
+         result += "\n";
+      }
+      return result;
    }
-}
+}   
