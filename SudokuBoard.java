@@ -1,6 +1,8 @@
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SudokuBoard {
    private int[][] board;
@@ -36,11 +38,46 @@ public class SudokuBoard {
                result += ".";
             }
             else {
-               result += "number";
+               result += number;
             }
          }
          result += "\n";
       }
       return result;
+   }
+   
+   public boolean isSolved() {
+      //Checks if the board is valid
+      if (!isValid()) {
+        return false;
+      }
+      
+      Map<Integer, Integer> counts = new HashMap<>();
+      //Loops through the whole board and counts how many times each number appears
+      for (int r = 0; r < board.length; r++) {
+         for (int c = 0; c < board.length; c++) {
+            int value = board[r][c];
+            if(value == 0) {
+               return false;
+            }
+            
+            if (value != 0) {
+               if (counts.containsKey(value)) {
+                  counts.put(value, counts.get(value) + 1);
+               }
+               else {
+                  counts.put(value, 1);
+               }
+            } 
+         }
+      }
+      //Checks if each number appeared 9 times
+      for (int num = 1; num <= 9; num++) {
+         if (!counts.containsKey(num) || counts.get(num) != 9) {
+            return false;
+         }
+      }
+      //If every condition was passed, the board is solved
+      return true;
    }
 }   
